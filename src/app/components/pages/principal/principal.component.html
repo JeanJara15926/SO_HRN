@@ -1,0 +1,148 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>ALGORITMO HRN</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div style="padding: 50px;">
+    <mat-card>
+        <h3>Añadir Proceso</h3>
+        <form class="example-container" #newForm="ngForm" (ngSubmit)="agregar()">
+            <div mat-dialog-content class="contenedor">
+              <mat-form-field>
+                <input matInput placeholder="Proceso" name="Proceso" #c_codigo="ngModel" [(ngModel)]="data.proceso" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Tiempo de llegada" name="c_nombre" #c_codigo="ngModel" [(ngModel)]="data.t_llegada"
+                  required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Ráfaga" name="c_codigocorto" #c_codigo="ngModel" [(ngModel)]="data.rafaga">
+              </mat-form-field>
+              <div mat-dialog-actions>
+                <br>
+                <button mat-raised-button color="primary"><mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>Añadir</button>
+                
+              </div>
+            </div>
+          </form>
+    </mat-card>
+    <br>
+    <table mat-table [dataSource]="tabla" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="N°">
+          <th mat-header-cell *matHeaderCellDef> 
+            
+         </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary">
+                <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="Proceso">
+          <th mat-header-cell *matHeaderCellDef> Proceso </th>
+          <td mat-cell *matCellDef="let element"> {{element.proceso}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Tiempo de llegada">
+          <th mat-header-cell *matHeaderCellDef> Tiempo de llegada </th>
+          <td mat-cell *matCellDef="let element"> {{element.t_llegada}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Ráfaga">
+          <th mat-header-cell *matHeaderCellDef> Ráfaga </th>
+          <td mat-cell *matCellDef="let element"> {{element.rafaga}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="eliminar">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Eliminar </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="error" (click)="eliminar(element)">
+                    <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <br>
+    <button mat-raised-button color="primary" (click)="calcular()">Calcular</button>
+    <br><br>
+
+    <mat-card *ngIf="calcular_bool">
+      
+      <h3>Diagrama de gant</h3>
+      <div class="contenedor2">
+          <div class="contenedor3" *ngFor="let item of arrProcesos" >
+              {{item}}
+          </div>
+      </div>
+      <div class="contenedor2">
+          <div class="contenedor4" *ngFor="let item of arrAcumulado" >
+              {{item}}
+          </div>
+      </div>
+    </mat-card>
+    <br>
+    <mat-card *ngIf="calcular_bool" class="contenedor2">
+      <div style="padding: 25px;" class="contenedor5">
+        <table mat-table [dataSource]="tabla2" class="mat-elevation-z8">
+          <!-- Name Column -->
+          <ng-container matColumnDef="Proceso">
+            <th mat-header-cell *matHeaderCellDef> Proceso </th>
+            <td mat-cell *matCellDef="let element"> {{element.proceso}} </td>
+          </ng-container>
+        
+          <!-- Weight Column -->
+          <ng-container matColumnDef="Tiempo de llegada">
+            <th mat-header-cell *matHeaderCellDef> Tiempo de llegada </th>
+            <td mat-cell *matCellDef="let element"> {{element.tejec}} </td>
+          </ng-container>
+        
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Ráfaga">
+            <th mat-header-cell *matHeaderCellDef> Ráfaga </th>
+            <td mat-cell *matCellDef="let element"> {{element.tejecProc}} </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+      </div>
+      
+      <div style="padding: 25px;" class="contenedor5">
+        <table mat-table [dataSource]="tabla3" class="mat-elevation-z8">
+          <!-- Name Column -->
+          <ng-container matColumnDef="Proceso">
+            <th mat-header-cell *matHeaderCellDef> Proceso </th>
+            <td mat-cell *matCellDef="let element"> {{element.proceso}} </td>
+          </ng-container>
+        
+          <!-- Weight Column -->
+          <ng-container matColumnDef="Tiempo de llegada">
+            <th mat-header-cell *matHeaderCellDef> Tiempo de llegada </th>
+            <td mat-cell *matCellDef="let element"> {{element.tejec}} </td>
+          </ng-container>
+        
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Ráfaga">
+            <th mat-header-cell *matHeaderCellDef> Ráfaga </th>
+            <td mat-cell *matCellDef="let element"> {{element.tejecProc}} </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+        </table>
+      </div>
+    </mat-card> 
+    
+</div>
