@@ -75,10 +75,8 @@ export class PrincipalComponent implements OnInit {
     this.cargatabla(this.arrData)
   }
 
-  eliminar(item: any){
-    console.log(item);      
+  eliminar(item: any){  
     this.arrData.splice(item.id,1)
-    console.log(this.arrData);
     this.cargatabla(this.arrData)
   }
 
@@ -99,13 +97,10 @@ export class PrincipalComponent implements OnInit {
     this.arrAcumulado.push(RAF1);
 
     for (let index = 1; index < vueltas; index++) {
-      console.log("vueltas - "+ index);
-      console.log(this.arrData);
       let a = this.arrAcumulado.length
       let acom = this.arrAcumulado[a-1];
       let int = this.operar(acom, this.arrData);
       this.arrData.splice(int,1);
-      //console.log(this.arrProcesos);
     }
     this.calcular_promedios();
     this.tablas_promedio();
@@ -127,7 +122,6 @@ export class PrincipalComponent implements OnInit {
       let RAF2 = <number>this.dataProcesoAux?.rafaga;
 
       let prioridadAux = <number>((acom-T_LL2) + 1*RAF2)/(1*RAF2)
-      console.log(prioridadAux +" -- "+ n_proceso);
       
       if (prioridadAux > prioridad) {
         prioridad = prioridadAux;
@@ -141,8 +135,6 @@ export class PrincipalComponent implements OnInit {
     this.arrProcesos.push( nom_proceso );
     return id
   }
-
-
 
   calcular_promedios(){
     
@@ -166,7 +158,6 @@ export class PrincipalComponent implements OnInit {
       }
     }
     promedio1 = promedio1/6
-    console.log(promedio1);
     this.arrtabla_TEP.push({
       id: 0,
       proceso: "",
@@ -191,7 +182,6 @@ export class PrincipalComponent implements OnInit {
       }
     }
     promedio2 = promedio2/6
-    console.log(promedio2);
     this.arrtabla_TRP.push({
       id: 0,
       proceso: "",
