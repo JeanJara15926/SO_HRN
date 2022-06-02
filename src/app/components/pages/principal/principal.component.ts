@@ -46,8 +46,8 @@ export class PrincipalComponent implements OnInit {
   ]
   id = 0;
   displayedColumns: string[] = ['N°', 'Proceso', 'Tiempo de llegada', 'Ráfaga', 'eliminar'];
-  displayedColumns2: string[] = ['Proceso', 'Tiempo de llegada', 'Ráfaga'];
-  displayedColumns3: string[] = ['Proceso', 'Tiempo de llegada', 'Ráfaga'];
+  displayedColumns2: string[] = ['Proceso', 'Tejec_Tlleg', 'TRProc'];
+  displayedColumns3: string[] = ['Proceso', 'TFEjec_Tlleg', 'TRProc'];
   constructor(
     
   ) { }
@@ -87,7 +87,7 @@ export class PrincipalComponent implements OnInit {
     this.arrProcesos.splice(0);
     this.arrtabla_TEP.splice(0);
     this.arrtabla_TRP.splice(0);
-    
+
     this.calcular_bool = true;
     this.arrAcumulado.push(0);    
     this.arrProcesos.push( "P1" );
@@ -112,7 +112,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   operar(acom: number, arr: any[]){
-    let probabilidad = 0;
+    let prioridad = 0;
     let nom_proceso = "";
     let id =  0;
     let acomAux = 0
@@ -126,20 +126,18 @@ export class PrincipalComponent implements OnInit {
       let T_LL2 = <number>this.dataProcesoAux?.t_llegada;
       let RAF2 = <number>this.dataProcesoAux?.rafaga;
 
-      let probabilidadAux = <number>((acom-T_LL2) + 1*RAF2)/(1*RAF2)
-      console.log(probabilidadAux +" -- "+ n_proceso);
+      let prioridadAux = <number>((acom-T_LL2) + 1*RAF2)/(1*RAF2)
+      console.log(prioridadAux +" -- "+ n_proceso);
       
-      if (probabilidadAux > probabilidad) {
-        probabilidad = probabilidadAux;
+      if (prioridadAux > prioridad) {
+        prioridad = prioridadAux;
         nom_proceso = n_proceso;
         acomAux = RAF2
         id = i;
       }
     }
     
-    this.arrAcumulado.push(1*acom + 1*acomAux);
-    console.log("probabilidad --- " + 1*acom + 1*probabilidad);
-    
+    this.arrAcumulado.push(1*acom + 1*acomAux);    
     this.arrProcesos.push( nom_proceso );
     return id
   }
@@ -147,9 +145,6 @@ export class PrincipalComponent implements OnInit {
 
 
   calcular_promedios(){
-    console.log("calcular_promedios");
-    console.log( this.arrDataAux.length);
-    console.log(this.arrProcesos.length);
     
     let promedio1 = 0;
     let promedio2 = 0;
